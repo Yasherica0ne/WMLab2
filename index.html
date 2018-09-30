@@ -2,7 +2,111 @@
     <head>
         <title>WMLab2</title>
     </head>
+    <style>
+        .SearchBar
+        {
+            width: 45vw;
+            height: 5vh;
+            margin-left: 25vw;
+            font-size: 3vh;
+        }
+        .MenuButton
+        {
+            height: 5vh;
+            width: 10vw;
+            font-size: 3vh;
+        }
+        #ButtonBar
+        {
+            margin-left: 25vw; 
+            margin-top: 1vh;
+            margin-bottom: 1vh;
+            visibility: collapse;
+        }
+        .GifCell
+        {
+            vertical-align: top;
+            border: 1vh solid blueviolet;
+            background-color: white;
+        }
+        .SaveButton
+        {
+            cursor: pointer;
+            text-align: center;
+            width: 4vw;
+            height: 4vh;
+            font-size: 3vh;
+            background-color: paleturquoise;
+        }
+        #GiphyContent
+        {
+            margin-left: auto; 
+            margin-right: auto;
+        }
+        #FavouritesStyle
+        {
+            height: 5vh;
+            margin-left: 5vw;
+            font-size: 3vh; 
+        }
+        #DropdownTable
+        {
+            z-index: 2;
+            margin-left: 13vw;
+        }
+        #DropdownContent
+        {
+            display: none;
+            position: absolute;
+            z-index: 1;
+            width: 98vw;
+            height: 94vh;
+            margin: 0 0 0 0;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+    </style>
+    <script src="Search.js"></script>
+    <script>
+        var isGifSearching = true;
+        
+        function ToggleToGif()
+        {
+            isGifSearching = true;
+            Searching();
+        }
+
+        function ToggleToStickers()
+        {
+            isGifSearching = false;
+            Searching();
+        }
+
+        function Searching()
+        {
+            Search(isGifSearching);
+            document.querySelector('#ButtonBar').style.visibility = 'visible';
+        }
+
+        function SetSearchListener()
+        {
+            let searchinput = document.querySelector('#SearchStr');
+            searchinput.addEventListener('keyup', () => 
+            {
+                document.querySelector('#DropdownContent').style.display = 'block';
+                let url = GetUrl();
+                url += `&limit=5`;
+                SearchByUrl(url, true, SetDropDownContent);
+             });
+        }
+    </script>
     <body>
-        <input type="text" id="SearchStr" />
+                <input type="text" id="SearchStr" class="SearchBar" />
+                <input style="height: 5vh; font-size: 3vh;" type="submit" value="Search" onclick="Searching()">
+                <input type="submit" id="FavouritesStyle" onclick="GetFavourites()" value="Favourites"><br />
+                <div id="DropdownContent"></div>
+                <div id="ButtonBar"></div>
+                
+                <table id="GiphyContent"></table>
+                <script>SetSearchListener()</script>
     </body>
 </html>
