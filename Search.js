@@ -22,7 +22,7 @@ var SetDropDownContent = (response, isNewSearch) =>
                 let newUrl = url + `&offset=${itemNumber}`;
                 SearchByUrl(newUrl, false, RequestForArray);
             }
-            else
+            else if (contentType === 'favourite')
             {
                 AddElements();
             }
@@ -118,6 +118,7 @@ function GetFavourites()
         itemsCount = 0;
         imageCounter = 0;
         itemArray = [];
+        contentType = 'favourite';
         isFirst = true;
         var objectStore = GetTransaction();
         var request = objectStore.getAll();
@@ -145,7 +146,10 @@ function SaveItem(ind)
         {
             alert("Item already in your favourites");
         }
-        document.querySelector('#SearchStr').focus();
+        if(contentType === 'fastSearch')
+        {
+            document.querySelector('#SearchStr').focus();
+        }
     }
 }
 
@@ -174,7 +178,7 @@ function MakeSingleItemForTable(item)
 function MakeSingleImage(item)
 {
     let saveButton = '';
-    if(contentType == 'new')
+    if(contentType === 'new' || contentType === 'fastSearch')
     {
         saveButton = CreateSaveButton(item.id);
     }

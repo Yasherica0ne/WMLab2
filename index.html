@@ -92,6 +92,7 @@
             let searchinput = document.querySelector('#SearchStr');
             searchinput.addEventListener('keyup', () => 
             {
+                contentType = 'fastSearch';
                 document.querySelector('#DropdownContent').style.display = 'block';
                 let url = GetUrl();
                 url += `&limit=5`;
