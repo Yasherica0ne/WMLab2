@@ -134,11 +134,12 @@ function SaveItem(ind)
 {
     if(isConnectedToDB)
     {
+        debugger;
         var objectStore = GetTransaction();
         let type = '';
         isGifSearching ? type = 'gif' : type = 'sticker';
-
-        var request = objectStore.add({index: ind, type: type}, ind);
+        let item = {index: ind, type: type};
+        var request = objectStore.add(item);
         request.onsuccess = function(event) {
             console.log("Succes");
         }
